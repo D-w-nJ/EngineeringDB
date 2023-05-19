@@ -1,4 +1,4 @@
-package org.swmaestro.demo.component;
+package com.edb.demo.component;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

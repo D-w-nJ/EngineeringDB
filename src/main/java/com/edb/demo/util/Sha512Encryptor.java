@@ -1,4 +1,4 @@
-package org.swmaestro.demo.util;
+package com.edb.demo.util;
 
 import lombok.extern.slf4j.Slf4j;
 

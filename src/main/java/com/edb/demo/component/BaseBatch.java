@@ -1,7 +1,7 @@
-package org.swmaestro.demo.component;
+package com.edb.demo.component;
 
+import com.edb.demo.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.swmaestro.demo.util.DateUtil;
 
 import java.util.Date;
 

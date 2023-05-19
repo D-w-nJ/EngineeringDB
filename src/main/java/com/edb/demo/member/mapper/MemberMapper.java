@@ -1,7 +1,7 @@
-package org.swmaestro.demo.mapper;
+package com.edb.demo.member.mapper;
 
+import com.edb.demo.member.model.Member;
 import org.apache.ibatis.annotations.Mapper;
-import org.swmaestro.demo.model.Member;
 
 import java.util.List;
 

@@ -1,11 +1,9 @@
-package org.swmaestro.demo.model;
+package com.edb.demo.member.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.edb.demo.util.BaseModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * Base Model

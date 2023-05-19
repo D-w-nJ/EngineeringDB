@@ -1,4 +1,4 @@
-package org.swmaestro.demo.util;
+package com.edb.demo.util;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

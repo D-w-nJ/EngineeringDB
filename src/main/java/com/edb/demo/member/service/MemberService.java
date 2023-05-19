@@ -1,10 +1,10 @@
-package org.swmaestro.demo.service;
+package com.edb.demo.member.service;
 
+import com.edb.demo.member.model.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.swmaestro.demo.mapper.MemberMapper;
-import org.swmaestro.demo.model.Member;
+import com.edb.demo.member.mapper.MemberMapper;
 
 import java.util.List;
 

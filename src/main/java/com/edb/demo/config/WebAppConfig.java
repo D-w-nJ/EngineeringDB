@@ -1,4 +1,4 @@
-package org.swmaestro.demo.config;
+package com.edb.demo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

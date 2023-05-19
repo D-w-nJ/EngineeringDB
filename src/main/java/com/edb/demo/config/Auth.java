@@ -1,4 +1,4 @@
-package org.swmaestro.demo.config;
+package com.edb.demo.config;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;

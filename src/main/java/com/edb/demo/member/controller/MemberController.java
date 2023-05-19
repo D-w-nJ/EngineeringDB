@@ -1,16 +1,16 @@
-package org.swmaestro.demo.controller;
+package com.edb.demo.member.controller;
 
+import com.edb.demo.config.Auth;
+import com.edb.demo.member.model.Member;
+import com.edb.demo.member.service.MemberService;
+import com.edb.demo.util.BaseController;
+import com.edb.demo.util.Sha512Encryptor;
 import io.swagger.annotations.*;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.swmaestro.demo.config.Auth;
-import org.swmaestro.demo.model.Member;
-import org.swmaestro.demo.service.MemberService;
-import org.swmaestro.demo.util.Sha512Encryptor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,12 +27,12 @@ import java.util.Map;
 @RequestMapping("/members")
 //@RequiredArgsConstructor
 @Slf4j
-public class MemberRestController extends BaseRestController {
+public class MemberController extends BaseController {
 
     private final MemberService memberService;
 
     @Autowired
-    public MemberRestController(MemberService memberService) {
+    public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
 
