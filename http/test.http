@@ -1,0 +1,30 @@
+POST http://localhost:8080/members/login
+Content-Type: application/json
+
+{
+  "email": "abc@gmail.com",
+  "password": "abc"
+}
+
+###
+POST http://localhost:8080/members
+Content-Type: application/json
+
+{
+  "email": "abc@gmail.com",
+  "password": "abc",
+  "name": "김아름",
+  "phone": "010-1111-1111",
+  "gender": "남",
+  "age": 31,
+  "nationality": "USA"
+}
+
+###
+GET http://localhost:8080/members/1
+
+###
+### test
+GET http://localhost:8080
+
+

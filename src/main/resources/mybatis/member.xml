@@ -5,27 +5,36 @@
 
 <mapper namespace="com.edb.demo.member.mapper.MemberMapper">
 
-    <insert id="create" parameterType="Member">
-        INSERT INTO Member
-            (id, password, name, email, phone, creator, updater)
+    <insert id="create" parameterType="Member" keyProperty="id">
+        INSERT INTO MEMBER
+            (email, password, name, phone, gender, age)
         VALUES
-            (#{id}, #{password}, #{name}, #{email}, #{phone}, #{creator}, #{updater})
+            (#{email}, #{password}, #{name}, #{phone}, #{gender}, #{age})
     </insert>
 
-    <select id="read" parameterType="string" resultType="Member">
-        SELECT id, name, email, phone, used, creator, createdAt, updater, updatedAt
-            FROM Member
+    <select id="getLastInsertedId" resultType="java.lang.Integer">
+        SELECT LAST_INSERT_ID()
+    </select>
+
+    <select id="read" parameterType="int" resultType="Member">
+        SELECT id, name, email, phone, gender, age
+            FROM MEMBER
             WHERE id = #{id}
     </select>
 
+    <insert id="findByEmail" parameterType="String">
+        SELECT id, name, email, password, phone, gender
+            FROM MEMBER
+            WHERE email = #{email}
+    </insert>
+
     <select id="list" parameterType="Member" resultType="Member">
-        SELECT id, name, email, phone, used, creator, createdAt, updater, updatedAt
+        SELECT id, name, email, phone
             FROM Member
             WHERE 1 = 1
             <if test="name != null">AND name = #{name}</if>
             <if test="email != null">AND email = #{email}</if>
             <if test="phone != null">AND phone = #{phone}</if>
-            ORDER BY createdAt DESC
     </select>
 
     <update id="update" parameterType="Member">
@@ -35,7 +44,6 @@
             <if test="name != null">, name = #{name}</if>
             <if test="email != null">, email = #{email}</if>
             <if test="phone != null">, phone = #{phone}</if>
-            <if test="used != null">, used = #{used}</if>
             WHERE id = #{id}
     </update>
 

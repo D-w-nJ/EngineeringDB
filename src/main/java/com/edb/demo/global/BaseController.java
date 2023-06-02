@@ -1,4 +1,4 @@
-package com.edb.demo.util;
+package com.edb.demo.global;
 
 import lombok.extern.slf4j.Slf4j;
 
