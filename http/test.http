@@ -1,3 +1,16 @@
+POST http://localhost:8080/tours?memberId=1
+Content-Type: application/json
+
+{
+  "travelPulpose": "쇼핑",
+  "hasChild": 0,
+  "crowdPreference": 5,
+  "preferenceNature": 5,
+  "travelDays": 6
+}
+
+###
+### 로그인
 POST http://localhost:8080/members/login
 Content-Type: application/json
 
@@ -6,7 +19,7 @@ Content-Type: application/json
   "password": "abc"
 }
 
-###
+### 회원가입
 POST http://localhost:8080/members
 Content-Type: application/json
 
@@ -20,11 +33,14 @@ Content-Type: application/json
   "nationality": "USA"
 }
 
-###
-GET http://localhost:8080/members/1
+### 회원 전체 조회
+GET http://localhost:8080/members
 
 ###
 ### test
 GET http://localhost:8080
+
+
+
 
 

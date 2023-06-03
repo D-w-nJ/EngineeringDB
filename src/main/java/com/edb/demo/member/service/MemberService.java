@@ -3,6 +3,7 @@ package com.edb.demo.member.service;
 import com.edb.demo.member.dao.MemberDao;
 import com.edb.demo.member.dto.request.MemberLogin;
 import com.edb.demo.member.dto.response.MemberAuth;
+import com.edb.demo.member.dto.response.MemberInfo;
 import com.edb.demo.member.exception.MemberNotMatchException;
 import com.edb.demo.member.model.Member;
 import com.edb.demo.util.JwtService;
@@ -118,6 +119,9 @@ public class MemberService {
         }
 
         return new MemberAuth((int)memberInfo.get("id"),userJWT);
+    }
 
+    public List<MemberInfo> getMembers() {
+        return memberDao.getMembers();
     }
 }

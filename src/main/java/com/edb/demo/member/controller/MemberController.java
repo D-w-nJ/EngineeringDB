@@ -4,6 +4,7 @@ import com.edb.demo.config.Auth;
 import com.edb.demo.global.BaseController;
 import com.edb.demo.member.dto.request.MemberLogin;
 import com.edb.demo.member.dto.response.MemberAuth;
+import com.edb.demo.member.dto.response.MemberInfo;
 import com.edb.demo.member.model.Member;
 import com.edb.demo.member.service.MemberService;
 import io.swagger.annotations.*;
@@ -49,7 +50,7 @@ public class MemberController extends BaseController {
             @ApiResponse(code = 404, message = "Not Found"),
             @ApiResponse(code = 500, message = "Failure")
     })
-    public ResponseEntity<?> create(@RequestBody Member member) {
+    public ResponseEntity<?> signUp(@RequestBody Member member) {
 
         // 1. Validation
         if (member == null) {
@@ -72,6 +73,12 @@ public class MemberController extends BaseController {
 
         MemberAuth memberAuth = memberService.login(memberLogin);
         return ResponseEntity.ok(memberAuth);
+    }
+
+    @GetMapping("")
+    ResponseEntity<?> getMembers() {
+        List<MemberInfo> memberInfos = memberService.getMembers();
+        return ResponseEntity.ok(memberInfos);
     }
 
     @GetMapping("/{id}")
@@ -107,47 +114,47 @@ public class MemberController extends BaseController {
         return ResponseEntity.ok(member);
     }
 
-    @GetMapping("")
-    @ApiOperation(value = "회원 목록 조회", notes = "회원 목록을 조회한다.", httpMethod = "GET", response = ResponseEntity.class, consumes = "application/json", tags = {})
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "member", value = "검색할 회원 정보", required = false, dataType = "Member", paramType = "body")
+//    @GetMapping("")
+//    @ApiOperation(value = "회원 목록 조회", notes = "회원 목록을 조회한다.", httpMethod = "GET", response = ResponseEntity.class, consumes = "application/json", tags = {})
+////    @ApiImplicitParams({
+////            @ApiImplicitParam(name = "member", value = "검색할 회원 정보", required = false, dataType = "Member", paramType = "body")
+////    })
+//    @ApiResponses(value = {
+//            @ApiResponse(code = 200, message = "status_code = 0, message = ok / status_code = -1, message = error / status_code = -99, message = Not Exist Required Param"),
+//            @ApiResponse(code = 401, message = "Unauthorized"),
+//            @ApiResponse(code = 403, message = "Forbidden"),
+//            @ApiResponse(code = 404, message = "Not Found"),
+//            @ApiResponse(code = 500, message = "Failure")
 //    })
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "status_code = 0, message = ok / status_code = -1, message = error / status_code = -99, message = Not Exist Required Param"),
-            @ApiResponse(code = 401, message = "Unauthorized"),
-            @ApiResponse(code = 403, message = "Forbidden"),
-            @ApiResponse(code = 404, message = "Not Found"),
-            @ApiResponse(code = 500, message = "Failure")
-    })
-    public ResponseEntity<?> list(@RequestParam(required = false) Map<String, Object> param) {
-        if (param == null)
-            param = new HashMap<String, Object>();
-
-        log.info("list; param={}");
-
-        // 1. Validation
-
-        // 2. Business Logic
-        Member member = new Member();
-        if (param != null) {
-            if (param.get("name") != null)
-                member.setName(String.valueOf(param.get("name")));
-
-            if (param.get("email") != null)
-                member.setEmail(String.valueOf(param.get("email")));
-
-            if (param.get("phone") != null)
-                member.setPhone(String.valueOf(param.get("phone")));
-        }
-
-        List<Member> list = memberService.list(member);
-        if (list == null)
-            list = new ArrayList<Member>();
-
-        // 3. Make Response
-        log.info("list.size={}", list.size());
-        return ResponseEntity.ok(list);
-    }
+//    public ResponseEntity<?> list(@RequestParam(required = false) Map<String, Object> param) {
+//        if (param == null)
+//            param = new HashMap<String, Object>();
+//
+//        log.info("list; param={}");
+//
+//        // 1. Validation
+//
+//        // 2. Business Logic
+//        Member member = new Member();
+//        if (param != null) {
+//            if (param.get("name") != null)
+//                member.setName(String.valueOf(param.get("name")));
+//
+//            if (param.get("email") != null)
+//                member.setEmail(String.valueOf(param.get("email")));
+//
+//            if (param.get("phone") != null)
+//                member.setPhone(String.valueOf(param.get("phone")));
+//        }
+//
+//        List<Member> list = memberService.list(member);
+//        if (list == null)
+//            list = new ArrayList<Member>();
+//
+//        // 3. Make Response
+//        log.info("list.size={}", list.size());
+//        return ResponseEntity.ok(list);
+//    }
 
     @PutMapping("/{id}")
     @Auth

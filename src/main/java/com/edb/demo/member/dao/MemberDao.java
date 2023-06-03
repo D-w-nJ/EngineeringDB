@@ -1,5 +1,6 @@
 package com.edb.demo.member.dao;
 
+import com.edb.demo.member.dto.response.MemberInfo;
 import com.edb.demo.member.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -40,4 +42,21 @@ public class MemberDao {
         Map<String,Object> result = jdbcTemplate.queryForMap(getPasswordByEmailQuery, getPasswordByEmailParams);
         return result;
     }
+
+    //회원 전체 조회
+    public List<MemberInfo> getMembers() {
+        String getMembersQuery = "SELECT * FROM MEMBER";
+        return this.jdbcTemplate.query(getMembersQuery,
+                (rs,rowNum) -> new MemberInfo(
+                        rs.getInt("id"),
+                        rs.getString("email"),
+                        rs.getString("name"),
+                        rs.getString("phone"),
+                        rs.getString("gender"),
+                        rs.getInt("age"),
+                        rs.getString("nationality"))
+                );
+    }
+
+
 }
