@@ -31,10 +31,10 @@ public class SwaggerConfig {
     @Bean
     public Docket commonApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("example")
+                .groupName("edb")
                 .apiInfo(this.apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.swmaestro.demo.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.edb.demo"))
                 .paths(PathSelectors.ant("/**"))
                 .build();
     }

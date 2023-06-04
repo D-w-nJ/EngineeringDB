@@ -69,6 +69,10 @@ public class MemberController extends BaseController {
     }
 
     @PostMapping("login")
+    @ApiOperation(value = "로그인", notes = "회원 로그인한다.", httpMethod = "POST", response = ResponseEntity.class, consumes = "application/json", tags = {})
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "memberLogin",  value = "회원로그인 정보", dataType = "MemberLogin", paramType = "body")
+    })
     ResponseEntity<?> login(@RequestBody MemberLogin memberLogin) {
 
         MemberAuth memberAuth = memberService.login(memberLogin);

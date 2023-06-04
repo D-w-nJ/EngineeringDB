@@ -14,8 +14,6 @@ import lombok.Data;
 @Data
 public class Member extends BaseModel {
 
-    private int id;
-
     @ApiModelProperty(value = "이메일", example = "email@company.com")
     private String email;
 

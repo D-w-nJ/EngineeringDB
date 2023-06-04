@@ -1,6 +1,7 @@
 package com.edb.demo.tour.dao;
 
 import com.edb.demo.tour.dto.request.TourOption;
+import com.edb.demo.tour.dto.response.Restaurant;
 import com.edb.demo.tour.dto.response.TouristAttraction;
 import com.edb.demo.tour.dto.response.TransportationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +41,13 @@ public class TourDao {
                 "CATEGORY NOT IN ('숙박', '기타')\n" +
                 "AND region IN " +
                 "( SELECT REGION.region from TRANSPORTATION_INFO INNER JOIN REGION on TRANSPORTATION_INFO.region = REGION.region " +
-                "WHERE transportation_time <= ? AND log2(visitor_count/area)-9 <= ? + 3 " +
+                "WHERE transportation_time <= ? AND log2(population/area)-9 <= ? + 3 " +
                 "AND log2(visitor_count/area)-9 >= ? - 3)\n" +
                 "AND natural_affinity_score >= ?\n" +
                 "AND IF(? = 1, kid_friendly_score = 1.0, 1)\n" +
                 "ORDER BY RAND()\n" +
                 "LIMIT 5;";
-        Object[] recommendParams = new Object[]{tourOption.getTravelDays() * 30, tourOption.getCrowdPreference(), tourOption.getCrowdPreference(),(double) tourOption.getPreferenceNature() / 10.0, tourOption.getHasChild()};
+        Object[] recommendParams = new Object[]{tourOption.getTravelDays() * 30, tourOption.getCrowdPreference(), tourOption.getCrowdPreference(), (double) tourOption.getPreferenceNature() / 10.0, tourOption.getHasChild()};
 
         return this.jdbcTemplate.query(recommendQuery, recommendParams,
                 (rs, rowNum) -> TouristAttraction.builder()
@@ -55,18 +56,37 @@ public class TourDao {
                         .category(rs.getString("sub_category"))
                         .destinationUrl(rs.getString("tourist_attraction_url"))
                         .transportationInfos(getTransportationInfo(rs.getString("region")))
+                        .restaurants(getRestaurant(rs.getString("region")))
                         .build()
         );
     }
 
-    public List<TransportationInfo> getTransportationInfo(String region){
+    private List<Restaurant> getRestaurant(String region) {
+        String getRestaurantQuery =
+                "(SELECT * FROM FilteredRestaurant WHERE region = ? AND CATEGORY = '한식' ORDER BY RAND() LIMIT 2)"
+                        + " UNION ALL "
+                        + "(SELECT * FROM FilteredRestaurant WHERE region = ? AND CATEGORY = '외국식' ORDER BY RAND() LIMIT 1)"
+                        + " UNION ALL "
+                        + "(SELECT * FROM FilteredRestaurant WHERE region = ? AND CATEGORY = '카페/찻집' ORDER BY RAND() LIMIT 1)"
+                        + " UNION ALL "
+                        + "(SELECT * FROM FilteredRestaurant WHERE region = ? AND CATEGORY = '간이음식' ORDER BY RAND() LIMIT 1)";
+        Object[] getRestaurantParam = new Object[]{region, region, region, region};
+        return this.jdbcTemplate.query(getRestaurantQuery, getRestaurantParam,
+                (rs, rowNum) -> Restaurant.builder()
+                        .name(rs.getString("restaurant_name"))
+                        .category(rs.getString("category"))
+                        .address(rs.getString("address"))
+                        .build());
+    }
+
+    public List<TransportationInfo> getTransportationInfo(String region) {
         String getTransportationInfoQuery = "SELECT transportation_type, transportation_time, transportation_cost FROM TRANSPORTATION_INFO WHERE region = ?";
         Object[] getTransportationInfoParams = new Object[]{region};
 
-        return this.jdbcTemplate.query(getTransportationInfoQuery,getTransportationInfoParams,
+        return this.jdbcTemplate.query(getTransportationInfoQuery, getTransportationInfoParams,
                 (rs, rowNum) -> TransportationInfo.builder()
                         .type(rs.getString("transportation_type"))
-                        .timeTaken((double) (rs.getInt("transportation_time")/60.0))
+                        .timeTaken((double) (rs.getInt("transportation_time") / 60.0))
                         .cost(rs.getInt("transportation_cost"))
                         .build()
         );
