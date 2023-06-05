@@ -12,8 +12,8 @@ spring:
   #MySQL
   datasource:
     url: jdbc:mysql://edb.cneekrdag7qh.ap-northeast-2.rds.amazonaws.com:3306/edb
-    username: edb
-    password: edbedb1234
+    username:
+    password:
 #    hikari:
 #      connection-timeout: 250
 #      max-lifetime: 500
